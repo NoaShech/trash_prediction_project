@@ -1,0 +1,96 @@
+<!-- templates/result.html -->
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>תוצאות זיהוי פסולת</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
+      margin: 0;
+      padding: 1em;
+      direction: rtl;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    .result-container {
+      margin: 2em auto;
+      max-width: 800px;
+    }
+    .result-image {
+      max-width: 100%;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .detections {
+      margin-top: 1.5em;
+      text-align: right;
+      background: #fff;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .detection-item {
+      margin-bottom: 0.5em;
+      padding-bottom: 0.5em;
+      border-bottom: 1px solid #eee;
+    }
+    .detection-item:last-child {
+      border-bottom: none;
+    }
+    .confidence {
+      color: #008800;
+      font-weight: bold;
+    }
+    .buttons {
+      margin-top: 2em;
+    }
+    button {
+      margin: 0.5em;
+      padding: 0.8em 1.5em;
+      font-size: 1.1em;
+      cursor: pointer;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>תוצאות זיהוי פסולת</h1>
+  
+  <div class="result-container">
+    <img class="result-image" src="{{ image_path }}" alt="תמונה עם תוצאות זיהוי">
+    
+    <div class="detections">
+      <h2>זוהו {{ detections|length }} פריטים</h2>
+      
+      {% if detections %}
+        {% for det in detections %}
+        <div class="detection-item">
+          <strong>{{ det.class_label }}</strong> 
+          <span class="confidence">({{ "%.2f"|format(det.class_confidence*100) }}%)</span>
+          <div>מיקום: X1={{ det.bbox[0] }}, Y1={{ det.bbox[1] }}, X2={{ det.bbox[2] }}, Y2={{ det.bbox[3] }}</div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p>לא זוהו פריטים</p>
+      {% endif %}
+    </div>
+    
+    <div class="buttons">
+      <button onclick="location.href='{{ url_for('camera') }}'">צלם תמונה חדשה</button>
+      <button onclick="location.href='{{ url_for('menu') }}'">חזרה לתפריט</button>
+    </div>
+  </div>
+</body>
+</html>

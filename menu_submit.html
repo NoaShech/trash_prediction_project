@@ -1,0 +1,70 @@
+<!-- templates/menu.html -->
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>תפריט ראשי עם מצלמה קטנה</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
+      margin: 0;
+      padding: 1em;
+      direction: rtl;
+      text-align: center;
+    }
+    .menu {
+      margin-bottom: 1em;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      margin: 0.5em;
+      padding: 0.8em 1.5em;
+      font-size: 1.1em;
+      cursor: pointer;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .camera-window {
+      margin-top: 2em;
+      display: inline-block;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      width: 320px;
+      height: 240px;
+    }
+    .camera-window iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="menu">
+    <h1>בחר פעולה</h1>
+    <!-- כפתור לצילום תמונה -->
+    <button onclick="location.href='{{ url_for('camera') }}'">צלם תמונה</button>
+  </div>
+
+  <div class="camera-window">
+    <!-- נטען כאן הדף camera.html בתוך iframe המוגבל ל‑320×240 -->
+    <iframe id="camFrame"
+            src="{{ url_for('camera') }}"
+            allow="camera">
+    </iframe>
+  </div>
+
+</body>
+</html>
